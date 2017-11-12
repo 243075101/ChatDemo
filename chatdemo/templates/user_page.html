@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block from %}
+    <form class="navbar-form navbar-right" action="" >
+            <input type="text" class="form-control" placeholder="Search..." name="wd">
+    </form>
+{% endblock %}
+
+{% block main %}
+    <form action="" method="post">
+    <table class="table table-bordered table-hover">
+        <tbody class="table-striped">
+        <tr>
+            <th>头像
+
+            </th>
+            <th>姓名
+
+            </th>
+
+            <th>选择好友
+
+            </th>
+        </tr>
+
+        {% for friend in friends %}
+
+            <tr >
+            <td>
+                <img src="{{ friend.headr_pic.url }}" width="50" height="50">
+            </td>
+            <td>{{ friend.nick }}</td>
+
+            <td>
+
+                <input type="checkbox" name="friend_pk" value="{{ friend.id }}">
+            </td>
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation" class="text-center">
+    <ul class="pagination">
+        <!--上一页-->
+        {% if friends.has_previous %}
+        <li>
+            <a href="?pn={{ friends.previous_page_number }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {% else %}
+        <li class="disabled">
+            <a href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {% endif %}
+        <!--end-->
+
+        <!--分页数字-->
+        {% for num in page_nums %}
+            {% if num == friends.number %} <!--当前页-->
+                <li class="active"><a href="?pn={{ num }}">{{ num }}</a></li>
+            {% else %} <!--非当前页-->
+                <li><a href="?pn={{ num }}">{{ num }}</a></li>
+            {% endif %}
+        {% endfor %}
+
+        {% if friends.has_next %}
+        <li>
+            <a href="?pn={{ friends.next_page_number }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        {% else %}
+        <li class="disabled">
+            <a href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        {% endif %}
+        <li><input type="submit" value="添加"></li>
+    </ul>
+</nav>
+
+    </form>
+{% endblock %}
